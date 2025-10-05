@@ -1,0 +1,37 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# VSCode
+bin/
+
+# Mac
+.DS_Store
+
+# Smithy
+.smithy.lsp.log
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+*/dist
+*/build
+*/out
+*/.turbo
+*/node_modules/
+*/client-package/
+*/server-package/
+*/smithy/build/
+*/smithy/.gradle/
+*/smithy/.idea/
+*/smithy/.vscode/
+*/smithy/.DS_Store
+*/cdk.out/

@@ -1,0 +1,132 @@
+{
+  "createPropertyExample": {
+    "title": "Modern 3BR Apartment in Masaki",
+    "description": "Beautiful modern apartment with ocean view in the prestigious Masaki area. Features include modern kitchen, spacious living room, and secure parking. Close to international schools and shopping centers.",
+    "address": {
+      "street": "Haile Selassie Road, Plot 123",
+      "ward": "dar_kinondoni_masaki",
+      "district": "dar_kinondoni",
+      "region": "dar_es_salaam",
+      "coordinates": {
+        "lat": -6.7676,
+        "lng": 39.2694
+      }
+    },
+    "propertyType": "apartment",
+    "specifications": {
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "squareMeters": 120,
+      "furnished": true,
+      "parking": true
+    },
+    "pricing": {
+      "monthlyRent": 1500000,
+      "deposit": 3000000,
+      "utilities": "separate",
+      "utilityCost": 200000
+    },
+    "amenities": [
+      "Air Conditioning",
+      "Generator Backup",
+      "Security Guard",
+      "Swimming Pool",
+      "Gym",
+      "Internet Ready"
+    ],
+    "media": {
+      "images": [
+        "https://nest-media.s3.amazonaws.com/properties/prop123/living-room.jpg",
+        "https://nest-media.s3.amazonaws.com/properties/prop123/bedroom1.jpg",
+        "https://nest-media.s3.amazonaws.com/properties/prop123/kitchen.jpg"
+      ],
+      "videos": [
+        "https://nest-media.s3.amazonaws.com/properties/prop123/tour.mp4"
+      ],
+      "virtualTour": "https://nest-media.s3.amazonaws.com/properties/prop123/360-tour.html"
+    },
+    "availability": {
+      "isAvailable": true,
+      "availableFrom": "2024-02-01T00:00:00Z",
+      "leaseDuration": 12
+    }
+  },
+  "propertyResponse": {
+    "propertyId": "prop_01HQ7X8K9M2N3P4Q5R6S7T8U9V",
+    "landlordId": "user_01HQ7X8K9M2N3P4Q5R6S7T8U9A",
+    "managerId": null,
+    "title": "Modern 3BR Apartment in Masaki",
+    "description": "Beautiful modern apartment with ocean view in the prestigious Masaki area. Features include modern kitchen, spacious living room, and secure parking. Close to international schools and shopping centers.",
+    "address": {
+      "street": "Haile Selassie Road, Plot 123",
+      "ward": "dar_kinondoni_masaki",
+      "district": "dar_kinondoni",
+      "region": "dar_es_salaam",
+      "coordinates": {
+        "lat": -6.7676,
+        "lng": 39.2694
+      }
+    },
+    "propertyType": "apartment",
+    "specifications": {
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "squareMeters": 120,
+      "furnished": true,
+      "parking": true
+    },
+    "pricing": {
+      "monthlyRent": 1500000,
+      "deposit": 3000000,
+      "utilities": "separate",
+      "utilityCost": 200000
+    },
+    "amenities": [
+      "Air Conditioning",
+      "Generator Backup",
+      "Security Guard",
+      "Swimming Pool",
+      "Gym",
+      "Internet Ready"
+    ],
+    "media": {
+      "images": [
+        "https://nest-media.s3.amazonaws.com/properties/prop123/living-room.jpg",
+        "https://nest-media.s3.amazonaws.com/properties/prop123/bedroom1.jpg",
+        "https://nest-media.s3.amazonaws.com/properties/prop123/kitchen.jpg"
+      ],
+      "videos": [
+        "https://nest-media.s3.amazonaws.com/properties/prop123/tour.mp4"
+      ],
+      "virtualTour": "https://nest-media.s3.amazonaws.com/properties/prop123/360-tour.html"
+    },
+    "availability": {
+      "isAvailable": true,
+      "availableFrom": "2024-02-01T00:00:00Z",
+      "leaseDuration": 12
+    },
+    "status": "active",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z"
+  },
+  "searchExample": {
+    "region": "dar_es_salaam",
+    "district": "dar_kinondoni",
+    "ward": "dar_kinondoni_masaki",
+    "propertyType": "apartment",
+    "minRent": 500000,
+    "maxRent": 2000000,
+    "minBedrooms": 2,
+    "limit": 20
+  },
+  "updateExample": {
+    "title": "Luxury 3BR Apartment in Masaki - Updated",
+    "pricing": {
+      "monthlyRent": 1600000,
+      "deposit": 3200000,
+      "utilities": "separate",
+      "utilityCost": 220000
+    },
+    "status": "active"
+  }
+}
