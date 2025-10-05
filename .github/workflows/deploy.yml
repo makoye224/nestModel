@@ -10,32 +10,167 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '18'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Setup Java (for Smithy)
+      
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
-      - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
-      - name: Publish Smithy Client
-        run: make publish-client
+      
+      - name: Generate Smithy Client & Server
+        run: ./gradlew build
+      
+      - name: Prepare Client Package
+        run: |
+          CLIENT_DIR=$(find smithy/build/smithyprojections/smithy -name "typescript-client-codegen" -type d | head -1)
+          PUBLISH_DIR="client-package"
+          
+          rm -rf $PUBLISH_DIR
+          mkdir -p $PUBLISH_DIR
+          cp -r $CLIENT_DIR/src/* $PUBLISH_DIR/
+          
+          cd $PUBLISH_DIR
+          
+          # Auto-increment version
+          CURRENT_VERSION=$(npm view rental-platform-client version 2>/dev/null || echo "0.0.0")
+          NEW_VERSION=$(node -e "
+            const v = '$CURRENT_VERSION'.split('.');
+            v[2] = parseInt(v[2]) + 1;
+            console.log(v.join('.'));
+          ")
+          
+          # Update package.json
+          cat > package.json << EOF
+          {
+            "name": "rental-platform-client",
+            "version": "$NEW_VERSION",
+            "description": "TypeScript client for Tanzania Rental Platform API",
+            "main": "./index.js",
+            "types": "./index.d.ts",
+            "files": ["**/*"],
+            "dependencies": {
+              "tslib": "^2.6.2",
+              "@smithy/smithy-client": "^4.7.0",
+              "@smithy/types": "^4.2.0",
+              "@aws-sdk/core": "^3.0.0",
+              "@smithy/util-body-length-node": "^4.2.0",
+              "@smithy/node-http-handler": "^4.2.0",
+              "@smithy/protocol-http": "^5.3.0",
+              "@smithy/util-base64": "^4.2.0",
+              "@smithy/util-utf8": "^4.2.0",
+              "@smithy/fetch-http-handler": "^5.3.0",
+              "@aws-sdk/middleware-host-header": "^3.0.0",
+              "@aws-sdk/middleware-logger": "^3.0.0",
+              "@aws-sdk/middleware-recursion-detection": "^3.0.0",
+              "@aws-sdk/middleware-user-agent": "^3.0.0",
+              "@aws-sdk/util-user-agent-node": "^3.0.0",
+              "@smithy/config-resolver": "^4.2.0",
+              "@smithy/middleware-content-length": "^4.2.0",
+              "@smithy/middleware-retry": "^4.2.0",
+              "@smithy/hash-node": "^4.2.0",
+              "@smithy/util-retry": "^4.2.0",
+              "@smithy/util-defaults-mode-node": "^4.2.0"
+            },
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/${{ github.repository }}"
+            },
+            "keywords": ["rental", "platform", "api", "client", "tanzania"],
+            "license": "MIT"
+          }
+          EOF
+      
+      - name: Install Client Dependencies
+        run: |
+          cd client-package
+          npm install
+      
+      - name: Compile Client TypeScript
+        run: |
+          cd client-package
+          npx tsc index.ts **/*.ts --outDir . --declaration --moduleResolution node --target es2020 --module commonjs --skipLibCheck
+      
+      - name: Publish Client to NPM
+        run: |
+          cd client-package
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish Smithy Server
-        run: make publish-server
+      - name: Prepare Server Package
+        run: |
+          SERVER_DIR=$(find smithy/build/smithyprojections/smithy -name "typescript-ssdk-codegen" -type d | head -1)
+          PUBLISH_DIR="server-package"
+          
+          rm -rf $PUBLISH_DIR
+          mkdir -p $PUBLISH_DIR
+          cp -r $SERVER_DIR/src/* $PUBLISH_DIR/
+          
+          cd $PUBLISH_DIR
+          
+          # Auto-increment version
+          CURRENT_VERSION=$(npm view rental-platform-server version 2>/dev/null || echo "0.0.0")
+          NEW_VERSION=$(node -e "
+            const v = '$CURRENT_VERSION'.split('.');
+            v[2] = parseInt(v[2]) + 1;
+            console.log(v.join('.'));
+          ")
+          
+          # Update package.json
+          cat > package.json << EOF
+          {
+            "name": "rental-platform-server",
+            "version": "$NEW_VERSION",
+            "description": "TypeScript server SDK for Tanzania Rental Platform API",
+            "main": "./index.js",
+            "types": "./index.d.ts",
+            "files": ["**/*"],
+            "dependencies": {
+              "tslib": "^2.6.2",
+              "@smithy/smithy-client": "^4.7.0",
+              "@smithy/types": "^4.2.0",
+              "@aws-sdk/core": "^3.0.0",
+              "@smithy/util-body-length-node": "^4.2.0",
+              "@aws-smithy/server-common": "^1.0.0-alpha.10",
+              "@smithy/node-http-handler": "^4.2.0",
+              "@smithy/protocol-http": "^5.3.0",
+              "@smithy/util-base64": "^4.2.0",
+              "@smithy/util-utf8": "^4.2.0"
+            },
+            "devDependencies": {
+              "typescript": "^5.0.0",
+              "@types/node": "^20.0.0"
+            },
+            "repository": {
+              "type": "git",
+              "url": "https://github.com/${{ github.repository }}"
+            },
+            "keywords": ["rental", "platform", "api", "server", "tanzania"],
+            "license": "MIT"
+          }
+          EOF
+      
+      - name: Install Server Dependencies
+        run: |
+          cd server-package
+          npm install
+      
+      - name: Compile Server TypeScript
+        run: |
+          cd server-package
+          npx tsc index.ts **/*.ts --outDir . --declaration --moduleResolution node --target es2020 --module commonjs --skipLibCheck
+      
+      - name: Publish Server to NPM
+        run: |
+          cd server-package
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 

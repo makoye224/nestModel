@@ -39,7 +39,6 @@ publish-client: build
 	CURRENT_VERSION=$$(npm view rental-platform-client version 2>/dev/null || echo "0.0.0"); \
 	NEW_VERSION=$$(node -e "const v = '$$CURRENT_VERSION'.split('.'); v[2] = parseInt(v[2]) + 1; console.log(v.join('.'));"); \
 	echo '{"name":"rental-platform-client","version":"'$$NEW_VERSION'","description":"TypeScript client for Tanzania Rental Platform API","main":"./index.ts","types":"./index.ts","files":["**/*"],"dependencies":{"tslib":"^2.6.2","@smithy/smithy-client":"^4.7.0","@smithy/types":"^4.2.0","@aws-sdk/core":"^3.0.0","@smithy/util-body-length-node":"^4.2.0","@smithy/node-http-handler":"^4.2.0","@smithy/protocol-http":"^5.3.0","@smithy/util-base64":"^4.2.0","@smithy/util-utf8":"^4.2.0","@smithy/fetch-http-handler":"^5.3.0","@aws-sdk/middleware-host-header":"^3.0.0","@aws-sdk/middleware-logger":"^3.0.0","@aws-sdk/middleware-recursion-detection":"^3.0.0","@aws-sdk/middleware-user-agent":"^3.0.0","@aws-sdk/util-user-agent-node":"^3.0.0","@smithy/config-resolver":"^4.2.0","@smithy/middleware-content-length":"^4.2.0","@smithy/middleware-retry":"^4.2.0","@smithy/hash-node":"^4.2.0","@smithy/util-retry":"^4.2.0","@smithy/util-defaults-mode-node":"^4.2.0"},"devDependencies":{"typescript":"^5.0.0","@types/node":"^20.0.0"},"keywords":["rental","platform","api","client","tanzania"],"license":"MIT"}' > package.json; \
-	echo "//registry.npmjs.org/:_authToken=$$NPM_TOKEN" > .npmrc; \
 	npm install && npm publish --access public
 
 # Publish Smithy server to NPM
@@ -63,7 +62,6 @@ publish-server: build
 	CURRENT_VERSION=$$(npm view rental-platform-server version 2>/dev/null || echo "0.0.0"); \
 	NEW_VERSION=$$(node -e "const v = '$$CURRENT_VERSION'.split('.'); v[2] = parseInt(v[2]) + 1; console.log(v.join('.'));"); \
 	echo '{"name":"rental-platform-server","version":"'$$NEW_VERSION'","description":"TypeScript server SDK for Tanzania Rental Platform API","main":"./index.js","types":"./index.d.ts","files":["**/*"],"dependencies":{"tslib":"^2.6.2","@smithy/smithy-client":"^4.7.0","@smithy/types":"^4.2.0","@aws-sdk/core":"^3.0.0","@smithy/util-body-length-node":"^4.2.0","@aws-smithy/server-common":"^1.0.0-alpha.10","@smithy/node-http-handler":"^4.2.0","@smithy/protocol-http":"^5.3.0","@smithy/util-base64":"^4.2.0","@smithy/util-utf8":"^4.2.0"},"devDependencies":{"typescript":"^5.0.0","@types/node":"^20.0.0"},"keywords":["rental","platform","api","server","tanzania"],"license":"MIT"}' > package.json; \
-	echo "//registry.npmjs.org/:_authToken=$$NPM_TOKEN" > .npmrc; \
 	npm install && npx tsc index.ts **/*.ts --outDir . --declaration --moduleResolution node --target es2020 --module commonjs --skipLibCheck && npm publish --access public
 
 # Help
