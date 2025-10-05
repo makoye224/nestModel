@@ -77,6 +77,10 @@ jobs:
               "@smithy/util-retry": "^4.2.0",
               "@smithy/util-defaults-mode-node": "^4.2.0"
             },
+            "devDependencies": {
+              "typescript": "^5.0.0",
+              "@types/node": "^20.0.0"
+            },
             "repository": {
               "type": "git",
               "url": "https://github.com/${{ github.repository }}"
