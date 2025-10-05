@@ -51,8 +51,8 @@ jobs:
             "name": "rental-platform-client",
             "version": "$NEW_VERSION",
             "description": "TypeScript client for Tanzania Rental Platform API",
-            "main": "./index.js",
-            "types": "./index.d.ts",
+            "main": "./index.ts",
+            "types": "./index.ts",
             "files": ["**/*"],
             "dependencies": {
               "tslib": "^2.6.2",
@@ -94,11 +94,6 @@ jobs:
         run: |
           cd client-package
           npm install
-      
-      - name: Compile Client TypeScript
-        run: |
-          cd client-package
-          npx tsc index.ts **/*.ts --outDir . --declaration --moduleResolution node --target es2020 --module commonjs --skipLibCheck
       
       - name: Publish Client to NPM
         run: |
