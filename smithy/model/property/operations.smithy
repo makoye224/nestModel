@@ -5,7 +5,7 @@ namespace com.nest.rental
 use smithy.framework#ValidationException
 
 @documentation("Create a new property listing")
-@http(method: "POST", uri: "/property/create")
+@http(method: "POST", uri: "/create")
 operation CreateProperty {
     input: CreatePropertyRequest
     output: CreatePropertyResponse
@@ -19,7 +19,7 @@ operation CreateProperty {
 
 @documentation("Get property details by ID")
 @readonly
-@http(method: "GET", uri: "/property/get/{propertyId}")
+@http(method: "GET", uri: "/get/{propertyId}")
 operation GetProperty {
     input: GetPropertyRequest
     output: GetPropertyResponse
@@ -32,7 +32,7 @@ operation GetProperty {
 }
 
 @documentation("Update existing property")
-@http(method: "PUT", uri: "/property/update/{propertyId}")
+@http(method: "PUT", uri: "/update/{propertyId}")
 @idempotent
 operation UpdateProperty {
     input: UpdatePropertyRequest
@@ -47,7 +47,7 @@ operation UpdateProperty {
 }
 
 @documentation("Delete a property listing")
-@http(method: "DELETE", uri: "/property/delete/{propertyId}")
+@http(method: "DELETE", uri: "/delete/{propertyId}")
 @idempotent
 operation DeleteProperty {
     input: DeletePropertyRequest
@@ -62,7 +62,7 @@ operation DeleteProperty {
 
 @documentation("List properties owned by a landlord")
 @readonly
-@http(method: "GET", uri: "/property/landlord/{userId}")
+@http(method: "GET", uri: "/landlord/{userId}")
 operation ListLandlordProperties {
     input: ListLandlordPropertiesRequest
     output: ListPropertiesResponse
@@ -76,7 +76,7 @@ operation ListLandlordProperties {
 
 @documentation("List all properties with pagination")
 @readonly
-@http(method: "GET", uri: "/property/list")
+@http(method: "GET", uri: "/list")
 operation ListProperties {
     input: ListPropertiesRequest
     output: ListPropertiesResponse
@@ -89,7 +89,7 @@ operation ListProperties {
 
 @documentation("Search properties with filters")
 @readonly
-@http(method: "GET", uri: "/property/search")
+@http(method: "GET", uri: "/search")
 operation SearchProperties {
     input: SearchPropertiesRequest
     output: SearchPropertiesResponse
@@ -101,7 +101,7 @@ operation SearchProperties {
 }
 
 @documentation("Get signed URL for media upload")
-@http(method: "POST", uri: "/property/upload-url/{propertyId}")
+@http(method: "POST", uri: "/upload-url/{propertyId}")
 operation GetMediaUploadUrl {
     input: GetMediaUploadUrlRequest
     output: GetMediaUploadUrlResponse
@@ -115,7 +115,7 @@ operation GetMediaUploadUrl {
 }
 
 @documentation("Update property status only")
-@http(method: "PATCH", uri: "/property/update-status/{propertyId}")
+@http(method: "PATCH", uri: "/update-status/{propertyId}")
 operation UpdatePropertyStatus {
     input: UpdatePropertyStatusRequest
     output: UpdatePropertyStatusResponse
@@ -129,7 +129,7 @@ operation UpdatePropertyStatus {
 }
 
 @documentation("Mark property as rented")
-@http(method: "POST", uri: "/property/mark-rented/{propertyId}")
+@http(method: "POST", uri: "/mark-rented/{propertyId}")
 operation MarkPropertyAsRented {
     input: MarkPropertyAsRentedRequest
     output: MarkPropertyAsRentedResponse
@@ -143,7 +143,7 @@ operation MarkPropertyAsRented {
 }
 
 @documentation("Mark property as available")
-@http(method: "POST", uri: "/property/mark-available/{propertyId}")
+@http(method: "POST", uri: "/mark-available/{propertyId}")
 operation MarkPropertyAsAvailable {
     input: MarkPropertyAsAvailableRequest
     output: MarkPropertyAsAvailableResponse
@@ -157,7 +157,7 @@ operation MarkPropertyAsAvailable {
 }
 
 @documentation("Assign property manager to property")
-@http(method: "POST", uri: "/property/assign-manager/{propertyId}")
+@http(method: "POST", uri: "/assign-manager/{propertyId}")
 operation AssignPropertyManager {
     input: AssignPropertyManagerRequest
     output: AssignPropertyManagerResponse
@@ -171,7 +171,7 @@ operation AssignPropertyManager {
 }
 
 @documentation("Remove property manager from property")
-@http(method: "DELETE", uri: "/property/remove-manager/{propertyId}")
+@http(method: "DELETE", uri: "/remove-manager/{propertyId}")
 @idempotent
 operation RemovePropertyManager {
     input: RemovePropertyManagerRequest
@@ -187,7 +187,7 @@ operation RemovePropertyManager {
 
 @documentation("List properties managed by a property manager")
 @readonly
-@http(method: "GET", uri: "/property/managed/{managerId}")
+@http(method: "GET", uri: "/managed/{managerId}")
 operation ListManagedProperties {
     input: ListManagedPropertiesRequest
     output: ListPropertiesResponse
@@ -201,7 +201,7 @@ operation ListManagedProperties {
 
 @documentation("Get properties by location")
 @readonly
-@http(method: "GET", uri: "/property/by-location/{region}/{district}")
+@http(method: "GET", uri: "/by-location/{region}/{district}")
 operation GetPropertiesByLocation {
     input: GetPropertiesByLocationRequest
     output: ListPropertiesResponse
@@ -214,7 +214,7 @@ operation GetPropertiesByLocation {
 
 @documentation("Get nearby properties by coordinates")
 @readonly
-@http(method: "GET", uri: "/property/nearby")
+@http(method: "GET", uri: "/nearby")
 operation GetNearbyProperties {
     input: GetNearbyPropertiesRequest
     output: ListPropertiesResponse
