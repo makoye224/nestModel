@@ -21,56 +21,18 @@ install:
 # Publish Smithy client to NPM
 publish-client: build
 	@echo "📦 Publishing Smithy client to NPM..."
-	@CLIENT_DIR=$$(find smithy/build/smithyprojections/smithy -name "typescript-client-codegen" -type d | head -1); \
+	@CLIENT_DIR="smithy/build/smithyprojections/smithy/source/typescript-client-codegen"; \
 	PUBLISH_DIR="client-package"; \
 	rm -rf $$PUBLISH_DIR; \
 	mkdir -p $$PUBLISH_DIR; \
-	cp -r $$CLIENT_DIR/src/* $$PUBLISH_DIR/; \
+	cp -r $$CLIENT_DIR/* $$PUBLISH_DIR/; \
 	cd $$PUBLISH_DIR; \
 	CURRENT_VERSION=$$(npm view rental-platform-client version 2>/dev/null || echo "0.0.0"); \
 	NEW_VERSION=$$(node -e "const v = '$$CURRENT_VERSION'.split('.'); v[2] = parseInt(v[2]) + 1; console.log(v.join('.'));"); \
-	echo '{' > package.json; \
-	echo '  "name": "rental-platform-client",' >> package.json; \
-	echo '  "version": "'$$NEW_VERSION'",' >> package.json; \
-	echo '  "description": "TypeScript client for Tanzania Rental Platform API",' >> package.json; \
-	echo '  "main": "./index.ts",' >> package.json; \
-	echo '  "types": "./index.ts",' >> package.json; \
-	echo '  "files": ["**/*"],' >> package.json; \
-	echo '  "dependencies": {' >> package.json; \
-	echo '    "tslib": "^2.6.2",' >> package.json; \
-	echo '    "@smithy/smithy-client": "^4.7.0",' >> package.json; \
-	echo '    "@smithy/types": "^4.2.0",' >> package.json; \
-	echo '    "@aws-sdk/core": "^3.0.0",' >> package.json; \
-	echo '    "@smithy/util-body-length-node": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/node-http-handler": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/protocol-http": "^5.3.0",' >> package.json; \
-	echo '    "@smithy/util-base64": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/util-utf8": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/fetch-http-handler": "^5.3.0",' >> package.json; \
-	echo '    "@aws-sdk/middleware-host-header": "^3.0.0",' >> package.json; \
-	echo '    "@aws-sdk/middleware-logger": "^3.0.0",' >> package.json; \
-	echo '    "@aws-sdk/middleware-recursion-detection": "^3.0.0",' >> package.json; \
-	echo '    "@aws-sdk/middleware-user-agent": "^3.0.0",' >> package.json; \
-	echo '    "@aws-sdk/util-user-agent-node": "^3.0.0",' >> package.json; \
-	echo '    "@smithy/config-resolver": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/middleware-content-length": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/middleware-retry": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/hash-node": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/util-retry": "^4.2.0",' >> package.json; \
-	echo '    "@smithy/util-defaults-mode-node": "^4.2.0"' >> package.json; \
-	echo '  },' >> package.json; \
-	echo '  "devDependencies": {' >> package.json; \
-	echo '    "typescript": "^5.0.0",' >> package.json; \
-	echo '    "@types/node": "^20.0.0"' >> package.json; \
-	echo '  },' >> package.json; \
-	echo '  "repository": {' >> package.json; \
-	echo '    "type": "git",' >> package.json; \
-	echo '    "url": "https://github.com/makoye224/nestModel"' >> package.json; \
-	echo '  },' >> package.json; \
-	echo '  "keywords": ["rental", "platform", "api", "client", "tanzania"],' >> package.json; \
-	echo '  "license": "MIT"' >> package.json; \
-	echo '}' >> package.json; \
+	sed -i '' 's/"name": ".*"/"name": "rental-platform-client"/' package.json; \
+	sed -i '' 's/"version": ".*"/"version": "'$$NEW_VERSION'"/' package.json; \
 	npm install && npm publish --access public
+
 
 # Publish Smithy server to NPM
 publish-server: build
