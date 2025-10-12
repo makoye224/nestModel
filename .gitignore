@@ -35,3 +35,5 @@ build
 */smithy/.vscode/
 */smithy/.DS_Store
 */cdk.out/
+client-package
+node_modules
