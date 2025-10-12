@@ -3,10 +3,12 @@
   "sources": ["model/"],
   "plugins": {
     "typescript-client-codegen": {
-      "package": "rental-platform-client"
+      "package": "rental-platform-client",
+      "packageVersion": "1.0.0"
     },
     "typescript-ssdk-codegen": {
-      "package" : "rental-platform-server"
+      "package" : "rental-platform-server",
+      "packageVersion": "1.0.0"
     }
   }
 }

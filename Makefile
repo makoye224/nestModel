@@ -21,14 +21,14 @@ install:
 # Publish Smithy client to NPM
 publish-client: build
 	@echo "📦 Publishing Smithy client to NPM..."
-	@CLIENT_DIR="smithy/build/smithyprojections/smithy/source/typescript-client-codegen"; \
+	@CURRENT_VERSION=$$(npm view rental-platform-client version 2>/dev/null || echo "0.0.1"); \
+	NEW_VERSION=$$(node -e "const v = '$$CURRENT_VERSION'.split('.'); v[2] = parseInt(v[2]) + 1; console.log(v.join('.'));"); \
+	CLIENT_DIR="smithy/build/smithyprojections/smithy/source/typescript-client-codegen"; \
 	PUBLISH_DIR="client-package"; \
 	rm -rf $$PUBLISH_DIR; \
 	mkdir -p $$PUBLISH_DIR; \
 	cp -r $$CLIENT_DIR/* $$PUBLISH_DIR/; \
 	cd $$PUBLISH_DIR; \
-	CURRENT_VERSION=$$(npm view rental-platform-client version 2>/dev/null || echo "0.0.0"); \
-	NEW_VERSION=$$(node -e "const v = '$$CURRENT_VERSION'.split('.'); v[2] = parseInt(v[2]) + 1; console.log(v.join('.'));"); \
 	sed -i '' 's/"name": ".*"/"name": "rental-platform-client"/' package.json; \
 	sed -i '' 's/"version": ".*"/"version": "'$$NEW_VERSION'"/' package.json; \
 	npm install && npm publish --access public
