@@ -3,11 +3,11 @@
   "sources": ["model/"],
   "plugins": {
     "typescript-client-codegen": {
-      "package": "@com.nest/nest-service-client",
+      "package": "rental-platform-client",
       "packageVersion": "0.0.1"
     },
     "typescript-ssdk-codegen": {
-      "package" : "@com.nest/nest-service-server",
+      "package" : "rental-platform-server",
       "packageVersion": "0.0.1"
     }
   }
